@@ -1,10 +1,15 @@
+import java.util.ArrayList;
 import java.util.NoSuchElementException;
+
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 /**
    An implementation of a doubly linked list.
  */
 public class LinkedList
 {  
+	ArrayList<ChangeListener> listeners;
 	Node first;
 	Node last;
 	/**
@@ -12,6 +17,10 @@ public class LinkedList
 	 * @author emersonye
 	 *
 	 */
+	public void addChangeListener(ChangeListener listener)
+	{
+		listeners.add(listener);
+	}
 	class Pointer
 	{  
 		Node position;
@@ -131,7 +140,9 @@ public class LinkedList
 				previous.next = addMe;
 				addMe.previous = previous;
 			}
-
+			ChangeEvent event = new ChangeEvent(this);
+			for (ChangeListener listener : listeners)
+				listener.stateChanged(event); 
 		}
 
 		/**
@@ -160,6 +171,9 @@ public class LinkedList
 				position.next.previous = previous;
 				position = position.next;
 			}
+			ChangeEvent event = new ChangeEvent(this);
+			for (ChangeListener listener : listeners)
+				listener.stateChanged(event); 
 		}
 	}
 	/**
