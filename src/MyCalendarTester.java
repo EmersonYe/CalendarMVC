@@ -3,6 +3,9 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
+
 enum MONTHS
 {
 	Jan, Feb, March, Apr, May, June, July, Aug, Sep, Oct, Nov, Dec;
@@ -21,7 +24,16 @@ public class MyCalendarTester
 		GregorianCalendar cal = new GregorianCalendar(); // capture today
 		LinkedList events = new LinkedList();
 		Scanner sc = new Scanner(System.in);
-
+		ChangeListener listener = new
+				ChangeListener()
+		{
+			public void stateChanged(ChangeEvent event)
+			{
+				//TODO: update gui
+			}
+		};
+		events.addChangeListener(listener);
+		
 		System.out.println("Welcome to Goggle Calendar!");
 		printCurrentCalendar(cal);
 		System.out.println("\nSelect one of the following options:\n[L]oad   [V]iew by  [C]reate, [G]o to [E]vent list [D]elete  [Q]uit");
@@ -198,6 +210,7 @@ public class MyCalendarTester
 							,Integer.parseInt(desiredDate[1])),events);
 				}
 			}
+			
 			System.out.println("\nSelect one of the following options:\n[L]oad   [V]iew by  [C]reate, [G]o to [E]vent list [D]elete  [Q]uit");
 
 		}
