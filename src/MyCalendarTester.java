@@ -1,8 +1,11 @@
+import java.awt.BorderLayout;
 import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
+import javax.swing.JFrame;
+import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -24,15 +27,34 @@ public class MyCalendarTester
 		GregorianCalendar cal = new GregorianCalendar(); // capture today
 		LinkedList events = new LinkedList();
 		Scanner sc = new Scanner(System.in);
+		
+		//gui
+		JFrame frame = new JFrame();
+		JPanel monthPanel = new JPanel();
+		monthPanel.setLayout(new BorderLayout());
+		
+		//frame.setLayout(manager);
+		MonthComponent monthView = new MonthComponent(events);
+		
+		
+		monthPanel.add(monthView, BorderLayout.CENTER);
+		
+		
+		frame.add(monthPanel);
+		
 		ChangeListener listener = new
 				ChangeListener()
 		{
 			public void stateChanged(ChangeEvent event)
 			{
-				//TODO: update gui
+				monthPanel.notify();
 			}
 		};
-		events.addChangeListener(listener);
+		//events.addChangeListener(listener);
+		
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.pack();
+		frame.setVisible(true);
 		
 		System.out.println("Welcome to Goggle Calendar!");
 		printCurrentCalendar(cal);
