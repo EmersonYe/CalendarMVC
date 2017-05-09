@@ -25,22 +25,31 @@ enum DAYS
 
 public class MyCalendarTester 
 {
+	static LinkedList events = new LinkedList();
 	public static void main(String [] args)
 	{
 		MONTHS[] arrayOfMonths = MONTHS.values();
 		DAYS[] arrayOfDays = DAYS.values();
 		GregorianCalendar cal = new GregorianCalendar(); // capture today
-		LinkedList events = new LinkedList();
+		//LinkedList events = new LinkedList();
 		Scanner sc = new Scanner(System.in);
 		
-		
+		File f = new File("events.txt");
+		if(!f.exists())
+			System.out.println("This is the first run.");
+		else{
+			events = new Nodify().fileToLinkedList(f);
+			System.out.println("Load successful.");
+		}
 		
 		//gui
 		JFrame frame = new JFrame();
 		JPanel monthPanel = new JPanel();
 		JPanel menuPanel = new JPanel();
+		DayViewPanel dayViewPanel = new DayViewPanel(events);
 		
 		final MonthComponent monthView = new MonthComponent(events, events.getDayToView());
+		
 		
 		
 		JButton createButton = new JButton("CREATE");
@@ -57,6 +66,7 @@ public class MyCalendarTester
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				save();
 				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
 			}
 		});
@@ -83,6 +93,7 @@ public class MyCalendarTester
 		});
 		
 		events.addChangeListener(monthView);
+		events.addChangeListener(dayViewPanel);
 		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(0,2));
@@ -98,9 +109,10 @@ public class MyCalendarTester
 		monthPanel.add(monthView, BorderLayout.CENTER);
 		
 		frame.setLayout(new BorderLayout());
-		frame.add(menuPanel, BorderLayout.NORTH);
-		frame.add(monthPanel, BorderLayout.WEST);
 		
+		frame.add(menuPanel, BorderLayout.NORTH);
+		frame.add(dayViewPanel, BorderLayout.CENTER);
+		frame.add(monthPanel, BorderLayout.WEST);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
@@ -123,7 +135,7 @@ public class MyCalendarTester
 			//load
 			if (input.equals("l"))
 			{
-				File f = new File("events.txt");
+				f = new File("events.txt");
 				if(!f.exists())
 					System.out.println("This is the first run.");
 				else{
@@ -293,6 +305,11 @@ public class MyCalendarTester
 		new Nodify().linkedListToFile(events, new File("events.txt"));
 		System.out.println("Thank you for using Goggle Calendar.");
 		sc.close();
+	}
+
+	protected static void save() {
+		// TODO Auto-generated method stub
+		new Nodify().linkedListToFile(events, new File("events.txt"));
 	}
 
 	public static void printCurrentCalendar(Calendar c)

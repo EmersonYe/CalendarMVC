@@ -49,11 +49,29 @@ public class MonthComponent extends JTextArea implements ChangeListener{
 		for (int i = 1; i <= daysInMonth; i++)
 		{
 			//highlight current date
+			//event on this date
+			LinkedList.Pointer pointer = dataModel.listPointer();
+			boolean printed = false;
+			
 			if(i == c.get(Calendar.DAY_OF_MONTH))
 			{
 				formattedString += String.format("[%2d]", i);
+				printed = true;
 			}
-			else
+			while(pointer.hasNext())
+			{
+				if( (!printed) && ((Event)pointer.get()).getStart().get(Calendar.YEAR) == c.get(Calendar.YEAR) &&
+						((Event)pointer.get()).getStart().get(Calendar.MONTH) == c.get(Calendar.MONTH) && 
+						((Event)pointer.get()).getStart().get(Calendar.DAY_OF_MONTH) == i )
+				{
+					//event found
+					formattedString += String.format("-%2d-", i);
+					printed = true;
+					break;
+				}
+				pointer.next();
+			}
+			if(!printed)
 				formattedString += String.format(" %2d ", i);
 
 			if (((i + startingDay - 1) % 7 == 0) || (i == daysInMonth))
