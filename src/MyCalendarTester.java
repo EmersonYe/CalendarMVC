@@ -2,6 +2,7 @@ import java.awt.BorderLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -37,7 +38,29 @@ public class MyCalendarTester
 		//gui
 		JFrame frame = new JFrame();
 		JPanel monthPanel = new JPanel();
+		JPanel menuPanel = new JPanel();
+		
 		final MonthComponent monthView = new MonthComponent(events, events.getDayToView());
+		
+		
+		JButton createButton = new JButton("CREATE");
+		createButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				//create event
+			}
+		});
+		
+		JButton quitButton = new JButton("QUIT");
+		quitButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				frame.dispatchEvent(new WindowEvent(frame, WindowEvent.WINDOW_CLOSING));
+			}
+		});
+		
 		
 		
 		// prev/next day buttons
@@ -59,18 +82,25 @@ public class MyCalendarTester
 			}
 		});
 		
+		events.addChangeListener(monthView);
+		
 		JPanel buttonPanel = new JPanel();
 		buttonPanel.setLayout(new GridLayout(0,2));
 		buttonPanel.add(prevDay);
 		buttonPanel.add(nextDay);
 		
+		menuPanel.setLayout(new BorderLayout());
+		menuPanel.add(createButton, BorderLayout.WEST);
+		menuPanel.add(quitButton, BorderLayout.EAST);
+		
 		monthPanel.setLayout(new BorderLayout());
 		monthPanel.add(buttonPanel, BorderLayout.NORTH);
 		monthPanel.add(monthView, BorderLayout.CENTER);
-		//frame.setLayout(manager);
-		frame.add(monthPanel);
 		
-		events.addChangeListener(monthView);
+		frame.setLayout(new BorderLayout());
+		frame.add(menuPanel, BorderLayout.NORTH);
+		frame.add(monthPanel, BorderLayout.WEST);
+		
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
