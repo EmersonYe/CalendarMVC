@@ -1,4 +1,6 @@
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.NoSuchElementException;
 
 import javax.swing.event.ChangeEvent;
@@ -9,9 +11,12 @@ import javax.swing.event.ChangeListener;
  */
 public class LinkedList
 {  
-	ArrayList<ChangeListener> listeners;
+	private ArrayList<ChangeListener> listeners;
 	Node first;
 	Node last;
+	
+	// day for gui to view
+	private GregorianCalendar dayToView;
 	/**
 	 * 
 	 * @author emersonye
@@ -195,8 +200,37 @@ public class LinkedList
 	{  
 		first = null;
 		last = null;
+		listeners = new ArrayList<ChangeListener>();
+		dayToView = new GregorianCalendar();
 	}
 
+	public GregorianCalendar getDayToView()
+	{
+		return dayToView;
+	}
+	
+	public GregorianCalendar incrementAndGetDayToView()
+	{
+		dayToView = new GregorianCalendar(dayToView.get(Calendar.YEAR),
+				dayToView.get(Calendar.MONTH),dayToView.get(Calendar.DAY_OF_MONTH)+1);
+		for (ChangeListener l : listeners)
+		{
+			l.stateChanged(new ChangeEvent(this));
+		}
+		return dayToView;
+	}
+	
+	public GregorianCalendar decrementAndGetDayToView()
+	{
+		dayToView = new GregorianCalendar(dayToView.get(Calendar.YEAR),
+				dayToView.get(Calendar.MONTH),dayToView.get(Calendar.DAY_OF_MONTH)-1);
+		for (ChangeListener l : listeners)
+		{
+			l.stateChanged(new ChangeEvent(this));
+		}
+		return dayToView;
+	}
+	
 	/**
       Returns a pointer for iterating through this list.
       @return a pointer for iterating through this list
@@ -282,5 +316,13 @@ public class LinkedList
 		if (last == null) { first = newNode; }
 		else { last.next = newNode; }
 		last = newNode;
+	}
+	
+	private void notifyListeners()
+	{
+		for (ChangeListener l : listeners)
+		{
+			l.stateChanged(new ChangeEvent(this));
+		}
 	}
 }

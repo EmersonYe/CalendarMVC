@@ -1,9 +1,13 @@
 import java.awt.BorderLayout;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Scanner;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
@@ -28,34 +32,54 @@ public class MyCalendarTester
 		LinkedList events = new LinkedList();
 		Scanner sc = new Scanner(System.in);
 		
+		
+		
 		//gui
 		JFrame frame = new JFrame();
 		JPanel monthPanel = new JPanel();
+		final MonthComponent monthView = new MonthComponent(events, events.getDayToView());
+		
+		
+		// prev/next day buttons
+		JButton prevDay = new JButton("<");
+		prevDay.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				monthView.decrementDay();;
+			}
+		});
+		
+		JButton nextDay = new JButton(">");
+		nextDay.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				monthView.incrementDay();;
+			}
+		});
+		
+		JPanel buttonPanel = new JPanel();
+		buttonPanel.setLayout(new GridLayout(0,2));
+		buttonPanel.add(prevDay);
+		buttonPanel.add(nextDay);
+		
 		monthPanel.setLayout(new BorderLayout());
-		
-		//frame.setLayout(manager);
-		MonthComponent monthView = new MonthComponent(events);
-		
-		
+		monthPanel.add(buttonPanel, BorderLayout.NORTH);
 		monthPanel.add(monthView, BorderLayout.CENTER);
-		
-		
+		//frame.setLayout(manager);
 		frame.add(monthPanel);
 		
-		ChangeListener listener = new
-				ChangeListener()
-		{
-			public void stateChanged(ChangeEvent event)
-			{
-				monthPanel.notify();
-			}
-		};
-		//events.addChangeListener(listener);
+		events.addChangeListener(monthView);
 		
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.pack();
 		frame.setVisible(true);
 		
+		
+		
+		
+		// text-based display
 		System.out.println("Welcome to Goggle Calendar!");
 		printCurrentCalendar(cal);
 		System.out.println("\nSelect one of the following options:\n[L]oad   [V]iew by  [C]reate, [G]o to [E]vent list [D]elete  [Q]uit");

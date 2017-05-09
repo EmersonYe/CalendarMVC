@@ -7,17 +7,26 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class MonthComponent extends JTextArea implements ChangeListener{
-	LinkedList DataModel;
+	LinkedList dataModel;
 	GregorianCalendar displayMonth;
 	
-	public MonthComponent(LinkedList DataModel)
+	public MonthComponent(LinkedList dataModel, GregorianCalendar dayToView)
 	{
-		this.DataModel = DataModel;
-		this.displayMonth = new GregorianCalendar();
+		this.dataModel = dataModel;
+		this.displayMonth = dayToView;
 		this.setText(formatMonth(displayMonth));
 		this.setFont(new Font("monospaced", Font.PLAIN, 12));
 	}
 
+	public void decrementDay()
+	{
+		dataModel.decrementAndGetDayToView();
+	}
+	public void incrementDay()
+	{
+		dataModel.incrementAndGetDayToView();
+	}
+	
 	private String formatMonth(Calendar c)
 	{
 		MONTHS[] arrayOfMonths = MONTHS.values();
@@ -55,7 +64,7 @@ public class MonthComponent extends JTextArea implements ChangeListener{
 	
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		// TODO Auto-generated method stub
+		displayMonth = dataModel.getDayToView();
 		this.setText(formatMonth(displayMonth));
 	}
 }
