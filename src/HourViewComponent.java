@@ -1,7 +1,6 @@
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -24,7 +23,6 @@ public class HourViewComponent extends JTextArea implements ChangeListener{
 		this.setFont(new Font("monospaced", Font.PLAIN, 12));
 		final int height = this.getPreferredSize().height;
 		final int heightPerRow = height/25;
-		System.out.println(height);
 		
 		this.addMouseListener(new MouseAdapter()
 		{

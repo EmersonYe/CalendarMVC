@@ -1,4 +1,6 @@
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -16,6 +18,37 @@ public class MonthComponent extends JTextArea implements ChangeListener{
 		this.displayMonth = dayToView;
 		this.setText(formatMonth(displayMonth));
 		this.setFont(new Font("monospaced", Font.PLAIN, 12));
+		
+		final int height = this.getPreferredSize().height;
+		final int width = this.getPreferredSize().width;
+		final int heightPerRow = height/8;
+		final int widthPerColumn = width/7;
+		
+		this.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				int columnClicked = e.getX()/widthPerColumn;
+				int rowClicked = e.getY()/heightPerRow - 2;
+				clickedOnDate(columnClicked,rowClicked);
+			}
+		});
+	}
+
+	private void clickedOnDate(int columnClicked, int rowClicked) {
+		int dayOfMonth=0;
+		GregorianCalendar c = dataModel.getDayToView();
+		int startingDay = new GregorianCalendar(c.get(Calendar.YEAR),c.get(Calendar.MONTH),1).get(Calendar.DAY_OF_WEEK) -2;
+		
+		dayOfMonth += columnClicked-startingDay;
+		for (int i = 0; i < rowClicked; i++)
+		{
+			dayOfMonth += 7;
+		}
+		System.out.println(dayOfMonth);
+		
+		if(dayOfMonth > 0 && dayOfMonth <= c.getActualMaximum(Calendar.DAY_OF_MONTH))
+			dataModel.setDayToView(dayOfMonth);
 	}
 
 	public void decrementDay()

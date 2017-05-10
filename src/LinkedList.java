@@ -214,6 +214,16 @@ public class LinkedList
 		return dayToView;
 	}
 	
+	public GregorianCalendar setDayToView(int dayOfMonth)
+	{
+		dayToView.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+		for (ChangeListener l : listeners)
+		{
+			l.stateChanged(new ChangeEvent(this));
+		}
+		return dayToView;
+	}
+	
 	public GregorianCalendar incrementAndGetDayToView()
 	{
 		dayToView = new GregorianCalendar(dayToView.get(Calendar.YEAR),
