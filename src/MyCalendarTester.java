@@ -51,13 +51,14 @@ public class MyCalendarTester
 		final MonthComponent monthView = new MonthComponent(events, events.getDayToView());
 		
 		
-		
+		//create new event button
 		JButton createButton = new JButton("CREATE");
 		createButton.addActionListener(new ActionListener()
 		{
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//create event
+				@SuppressWarnings("unused")
+				CreationDialogueFrame creationFrame = new CreationDialogueFrame(events);
 			}
 		});
 		

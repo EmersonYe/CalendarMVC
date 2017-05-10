@@ -1,12 +1,17 @@
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
+import javax.swing.JOptionPane;
 import javax.swing.JTextArea;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 public class HourViewComponent extends JTextArea implements ChangeListener{
+	final int PxPERLINE = 16;
 	LinkedList dataModel;
 	GregorianCalendar displayDay;
 
@@ -17,9 +22,20 @@ public class HourViewComponent extends JTextArea implements ChangeListener{
 		this.displayDay = dayToView;
 		this.setText(formatDay(displayDay));
 		this.setFont(new Font("monospaced", Font.PLAIN, 12));
+		final int height = this.getPreferredSize().height;
+		final int heightPerRow = height/25;
+		System.out.println(height);
+		
+		this.addMouseListener(new MouseAdapter()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				//every line is 16 px
+				int hourClicked = e.getY()/heightPerRow;
+				clickedOnEvent(hourClicked);
+			}
+		});
 	}
-
-
 
 	private String formatDay(GregorianCalendar displayDay) {
 		String formattedString = "";
@@ -56,15 +72,37 @@ public class HourViewComponent extends JTextArea implements ChangeListener{
 				//event found
 				return currentEvent;
 			}
-			else
-			{
-				//System.out.println("event found on month" + currentEvent.getStart().get(Calendar.MONTH));
-			}
 			if(pointer.hasNext())
 				pointer.next();
 
 		}
 		return null;
+	}
+	
+	private void clickedOnEvent(int time)
+	{
+		//will prompt user to delete event
+		GregorianCalendar c = dataModel.getDayToView();
+		LinkedList.Pointer pointer = dataModel.listPointer();
+		while(pointer.hasNext())
+		{
+			Event currentEvent = (Event)pointer.get();
+			if( currentEvent.getStart().get(Calendar.YEAR) == c.get(Calendar.YEAR) &&
+					currentEvent.getStart().get(Calendar.MONTH) == c.get(Calendar.MONTH) && 
+					currentEvent.getStart().get(Calendar.DAY_OF_MONTH) == c.get(Calendar.DAY_OF_MONTH) &&
+					currentEvent.getStart().get(Calendar.HOUR_OF_DAY) == time)
+			{
+				//event found
+				int decision = JOptionPane.showConfirmDialog(null, "Delete event: \""+currentEvent.getTitle()+"\"?");
+				if (decision == 0)
+				{
+					pointer.remove();
+				}
+			}
+			if(pointer.hasNext())
+				pointer.next();
+
+		}
 	}
 
 	@Override
