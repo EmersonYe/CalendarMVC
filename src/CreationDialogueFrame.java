@@ -36,7 +36,8 @@ public class CreationDialogueFrame extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				Event newEvent;
 				//potential shallow copy going on right here
-				GregorianCalendar startTime = dataModel.getDayToView();
+				GregorianCalendar c = dataModel.getDayToView();
+				GregorianCalendar startTime = new GregorianCalendar(c.get(Calendar.YEAR),c.get(Calendar.MONTH),c.get(Calendar.DAY_OF_MONTH));
 				startTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startTimeArea.getText().substring(0, 2)));
 				//ignore minutes, only check hour
 				//startTime.set(Calendar.MINUTE, Integer.parseInt(startTimeArea.getText().substring(3)));
