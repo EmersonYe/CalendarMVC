@@ -1,4 +1,5 @@
 import java.awt.BorderLayout;
+import java.awt.Font;
 import java.util.Calendar;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
@@ -19,6 +20,7 @@ public class DayViewPanel extends JPanel implements ChangeListener{
 		currentDay = new JTextArea(String.format( arrayOfDays[(dataModel.getDayToView()).get(Calendar.DAY_OF_WEEK)-1] + " " + (dataModel.getDayToView().get(Calendar.MONTH) + 1) + "/" + (dataModel.getDayToView()).get(Calendar.DAY_OF_MONTH) + "\n"));
 		this.add(currentDay, BorderLayout.NORTH);
 		this.add(hourViewComponent, BorderLayout.CENTER);
+		this.setFont(new Font("monospaced", Font.PLAIN, 12));
 	}
 
 	@Override
