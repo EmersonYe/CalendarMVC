@@ -27,7 +27,7 @@ public class DayViewPanel extends JPanel implements ChangeListener{
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
-		// TODO Auto-generated method stub
+		//update display current day
 		currentDay.setText(String.format(arrayOfDays[(dataModel.getDayToView()).get(Calendar.DAY_OF_WEEK)-1] + " " + (dataModel.getDayToView().get(Calendar.MONTH) + 1) + "/" + (dataModel.getDayToView()).get(Calendar.DAY_OF_MONTH) + "\n"));
 		hourViewComponent.stateChanged(new ChangeEvent(this));
 	}

@@ -43,7 +43,10 @@ public class HourViewComponent extends JTextArea implements ChangeListener{
 		for (int i = 0; i < 24; i++)
 		{
 			formattedString += i + ":00";
-			GregorianCalendar hour = dataModel.getDayToView();
+			
+			//FIXED: was making shallow copy. Now makes hard copy
+			GregorianCalendar c = dataModel.getDayToView();
+			GregorianCalendar hour = new GregorianCalendar(c.get(Calendar.YEAR),c.get(Calendar.MONTH),i);
 			hour.set(Calendar.HOUR_OF_DAY, i);
 			Event eventChecker = eventAtTime(hour);
 			//there is an event

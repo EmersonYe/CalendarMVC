@@ -28,7 +28,7 @@ public class CreationDialogueFrame extends JFrame{
 		startTimeArea = new JTextArea("08:00",1,5);
 		endTimeArea = new JTextArea(1,5);
 		saveButton = new JButton("SAVE");
-		/* BROKEN
+		
 		saveButton.addActionListener(new ActionListener()
 		{
 			@Override
@@ -54,6 +54,7 @@ public class CreationDialogueFrame extends JFrame{
 				//nothing loaded
 				if(dataModel.first == null)
 				{
+					System.out.println("Adding to empty LinkedList");
 					pointer.add(newEvent);
 				}
 				//new event starts before pointer, adds in sorted order
@@ -63,17 +64,24 @@ public class CreationDialogueFrame extends JFrame{
 					{
 						if(pointer.get().equals(dataModel.getLast()))
 						{
+							System.out.println("Adding to end of LinkedList");
 							pointer.next();
 							break;
 						}
 						pointer.next();
 					}
+					System.out.println("Adding to middle of LinkedList");
+					//adding sets time to 23 for some reason...
+					//DIAGNOSE
+					//System.out.println(newEvent.getStart().getTime().toString());
 					pointer.add(newEvent);
+					//DIAGNOSE
+					//System.out.println(newEvent.getStart().getTime().toString());
 				}
 				
 			}
 		});
-		*/
+		
 		//set borders
 		eventNameArea.setBorder(BorderFactory.createLineBorder(Color.black, 1));
 		startTimeArea.setBorder(BorderFactory.createLineBorder(Color.black, 1));

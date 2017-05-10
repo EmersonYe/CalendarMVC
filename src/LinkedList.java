@@ -145,9 +145,20 @@ public class LinkedList
 				previous.next = addMe;
 				addMe.previous = previous;
 			}
+			
 			ChangeEvent event = new ChangeEvent(this);
 			for (ChangeListener listener : listeners)
-				listener.stateChanged(event); 
+			{
+				//this line is changing element start time
+				listener.stateChanged(event);
+				//DIAGNOSE
+				System.out.println( ((Event) element).getStart().get(Calendar.HOUR_OF_DAY));
+				//DIAGNOSE
+			}
+			
+			//DIAGNOSE
+			//System.out.println( ((Event) element).getStart().get(Calendar.HOUR_OF_DAY));
+			//DIAGNOSE
 		}
 
 		/**
