@@ -1,9 +1,5 @@
 import java.awt.BorderLayout;
-import java.awt.LayoutManager;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
-
-import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextArea;
 import javax.swing.event.ChangeEvent;

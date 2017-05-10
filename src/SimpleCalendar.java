@@ -11,8 +11,6 @@ import java.util.Scanner;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.event.ChangeEvent;
-import javax.swing.event.ChangeListener;
 
 enum MONTHS
 {
@@ -23,7 +21,7 @@ enum DAYS
 	Sun, Mon, Tue, Wed, Thur, Fri, Sat ;
 }
 
-public class MyCalendarTester 
+public class SimpleCalendar 
 {
 	static LinkedList events = new LinkedList();
 	public static void main(String [] args)

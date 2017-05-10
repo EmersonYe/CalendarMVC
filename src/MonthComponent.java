@@ -45,7 +45,6 @@ public class MonthComponent extends JTextArea implements ChangeListener{
 		{
 			dayOfMonth += 7;
 		}
-		System.out.println(dayOfMonth);
 		
 		if(dayOfMonth > 0 && dayOfMonth <= c.getActualMaximum(Calendar.DAY_OF_MONTH))
 			dataModel.setDayToView(dayOfMonth);
