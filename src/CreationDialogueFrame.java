@@ -35,12 +35,14 @@ public class CreationDialogueFrame extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				Event newEvent;
+				//potential shallow copy going on right here
 				GregorianCalendar startTime = dataModel.getDayToView();
 				startTime.set(Calendar.HOUR_OF_DAY, Integer.parseInt(startTimeArea.getText().substring(0, 2)));
-				startTime.set(Calendar.MINUTE, Integer.parseInt(startTimeArea.getText().substring(3)));
+				//ignore minutes, only check hour
+				//startTime.set(Calendar.MINUTE, Integer.parseInt(startTimeArea.getText().substring(3)));
 
 				//there is an end time
-				if (endTimeArea.getText().length() > 0)
+				if (endTimeArea.getText().length() >= 5)
 				{
 					newEvent = new Event(eventNameArea.getText(), startTime, Integer.parseInt(endTimeArea.getText().replaceAll(":", "")));
 				}
@@ -71,10 +73,13 @@ public class CreationDialogueFrame extends JFrame{
 						}
 						pointer.next();
 					}
-					//System.out.println("Adding to middle of LinkedList");
+					
 					//no collision
 					if (!(((Event)pointer.get() ).getStart().compareTo(startTime) == 0))
+					{
+						//System.out.println("Adding to middle of LinkedList");
 						pointer.add(newEvent);
+					}
 					//collision detected
 					else
 					{

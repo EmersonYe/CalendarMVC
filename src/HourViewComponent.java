@@ -108,6 +108,7 @@ public class HourViewComponent extends JTextArea implements ChangeListener{
 
 	@Override
 	public void stateChanged(ChangeEvent e) {
+		//System.out.println("hourView notified and hourly view updated");
 		displayDay = dataModel.getDayToView();
 		this.setText(formatDay(displayDay));
 	}

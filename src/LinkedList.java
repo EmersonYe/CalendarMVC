@@ -88,6 +88,14 @@ public class LinkedList
 			if (!hasNext())
 				throw new NoSuchElementException();
 			position.data = element;
+			
+			//notify ChangeListeners
+			ChangeEvent event = new ChangeEvent(this);
+			for (ChangeListener listener : listeners)
+			{
+				//this line is changing element start time
+				listener.stateChanged(event);
+			}
 		}
 
 		/**
