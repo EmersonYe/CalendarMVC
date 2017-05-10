@@ -71,12 +71,7 @@ public class CreationDialogueFrame extends JFrame{
 						pointer.next();
 					}
 					System.out.println("Adding to middle of LinkedList");
-					//adding sets time to 23 for some reason...
-					//DIAGNOSE
-					//System.out.println(newEvent.getStart().getTime().toString());
 					pointer.add(newEvent);
-					//DIAGNOSE
-					//System.out.println(newEvent.getStart().getTime().toString());
 				}
 				
 			}

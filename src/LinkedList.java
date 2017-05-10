@@ -151,14 +151,8 @@ public class LinkedList
 			{
 				//this line is changing element start time
 				listener.stateChanged(event);
-				//DIAGNOSE
-				System.out.println( ((Event) element).getStart().get(Calendar.HOUR_OF_DAY));
-				//DIAGNOSE
 			}
-			
-			//DIAGNOSE
-			//System.out.println( ((Event) element).getStart().get(Calendar.HOUR_OF_DAY));
-			//DIAGNOSE
+
 		}
 
 		/**
